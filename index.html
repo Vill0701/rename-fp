@@ -11,6 +11,31 @@
   <link rel="apple-touch-icon" href="ikon/192.png">
   <link rel="stylesheet" href="css/gaya.css">
   <script type="module" src="js/app.js"></script>
+  <script>
+    // Penjaga: skrip biasa ini tetap jalan walau modul halaman gagal dimuat, lalu menampilkan sebabnya.
+    (function () {
+      function tampil(pesan) {
+        var el = document.getElementById("peringatan");
+        if (!el) return document.addEventListener("DOMContentLoaded", function () { tampil(pesan); });
+        el.textContent = pesan;
+        el.hidden = false;
+      }
+      window.__rfpGalat = tampil;
+      if (location.protocol !== "http:" && location.protocol !== "https:") {
+        tampil("Halaman ini dibuka langsung dari berkas (" + location.protocol + "), sehingga browser memblokir skripnya " +
+          "dan PDF tidak bisa diproses. Buka lewat alamat https://vill0701.github.io/rename-fp/");
+        return;
+      }
+      window.addEventListener("error", function (e) {
+        if (!window.__rfpSiap) tampil("Halaman gagal dimuat: " + (e.message || "skrip tidak bisa dijalankan") +
+          ". Perbarui Chrome / browser Anda lalu muat ulang halaman.");
+      });
+      setTimeout(function () {
+        if (!window.__rfpSiap) tampil("Halaman belum siap dipakai. Kemungkinan browser ini terlalu lama atau koneksi terputus. " +
+          "Perbarui Chrome / browser Anda, lalu muat ulang halaman.");
+      }, 8000);
+    })();
+  </script>
 </head>
 <body>
   <header class="kepala">
@@ -22,9 +47,10 @@
   </header>
 
   <main>
+    <div id="peringatan" role="alert" hidden></div>
     <section class="kartu">
       <label id="pilih" class="pilih">
-        <input id="berkas" type="file" accept="application/pdf,.pdf" multiple>
+        <input id="berkas" type="file" accept="application/pdf,.pdf" multiple disabled>
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z M14 3v5h5 M12 18v-6 M9 15l3-3 3 3"/></svg>
         <strong>Pilih PDF Faktur Pajak</strong>
         <span>Boleh banyak sekaligus. Bisa juga diseret ke sini.</span>

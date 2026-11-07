@@ -1,6 +1,6 @@
 // Cache semua berkas halaman agar Rename FP bisa dipakai tanpa internet setelah dibuka sekali.
 // Ganti VERSI setiap kali ada berkas yang berubah, supaya cache lama dibuang.
-const VERSI = "rename-fp-v1";
+const VERSI = "rename-fp-v2";
 const BERKAS = [
   "./",
   "index.html",

@@ -46,6 +46,11 @@ main, .kepala, footer { max-width: 720px; margin: 0 auto; }
   padding: 26px 16px; border: 2px dashed var(--garis); border-radius: 12px; cursor: pointer;
   transition: border-color .15s, background .15s;
 }
+#peringatan {
+  margin-bottom: 14px; padding: 12px 14px; border-radius: 12px; font-size: 14px;
+  background: #fef2f2; color: #991b1b; border: 1px solid #fecaca;
+}
+.pilih:has(input:disabled) { opacity: .55; cursor: progress; }
 .pilih:hover, .pilih.seret { border-color: var(--biru); background: var(--biru-muda); }
 .pilih input { position: absolute; width: 1px; height: 1px; opacity: 0; }
 .pilih:focus-within { outline: 2px solid var(--biru); outline-offset: 2px; }

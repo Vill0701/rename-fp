@@ -18,7 +18,13 @@ let pola = simpanan.ambil("pola", POLA_BAWAAN);
 // ---------- Membaca PDF ----------
 async function baca(file) {
   const data = new Uint8Array(await file.arrayBuffer());
-  const x = { asal: file.name, data, info: null, nama: "", diubah: false, url: null, galat: "" };
+  const x = { asal: file.name || "tanpa nama", data, info: null, nama: "", diubah: false, url: null, galat: "" };
+  // Yang menentukan isi berkas, bukan nama/tipenya: pemilih berkas Android kadang memberi nama tanpa ".pdf"
+  if (String.fromCharCode(...data.subarray(0, 1024)).indexOf("%PDF") < 0) {
+    x.galat = "Bukan berkas PDF";
+    x.nama = x.asal.replace(/\.[^.]*$/, "");
+    return x;
+  }
   try {
     // pdf.js memindahkan buffer ke worker, jadi yang dikirim salinannya
     const doc = await pdfjs.getDocument({ data: data.slice(), verbosity: 0 }).promise;
@@ -35,13 +41,24 @@ async function baca(file) {
 }
 
 async function tambah(files) {
-  const pdf = [...files].filter((f) => /\.pdf$/i.test(f.name) || f.type === "application/pdf");
-  if (!pdf.length) return;
-  $("#hasil").hidden = false;
-  $("#ringkas").textContent = `Membaca ${pdf.length} PDF…`;
-  for (const f of pdf) {
-    daftar.push(await baca(f));
-    tampil();
+  const semua = [...(files ?? [])];
+  if (!semua.length) return;
+  const input = $("#berkas");
+  input.disabled = true;
+  try {
+    for (const [i, f] of semua.entries()) {
+      $("#hasil").hidden = false;
+      $("#ringkas").textContent = `Membaca PDF ${i + 1} dari ${semua.length}…`;
+      try {
+        daftar.push(await baca(f));
+      } catch (e) {
+        daftar.push({ asal: f.name || "tanpa nama", data: new Uint8Array(), info: null, nama: f.name || "faktur", diubah: false, url: null, galat: `Berkas tidak bisa dibuka (${e.message})` });
+      }
+      tampil();
+    }
+  } finally {
+    input.disabled = false;
+    input.value = ""; // agar berkas yang sama bisa dipilih lagi
   }
 }
 
@@ -175,3 +192,7 @@ pilih.addEventListener("drop", (e) => {
 
 // Bisa dipasang & dipakai tanpa internet setelah dibuka sekali
 if ("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js").catch(() => {});
+
+// Siap: pemilih berkas baru diaktifkan di sini, jadi tidak ada pilihan PDF yang hilang tanpa diproses
+$("#berkas").disabled = false;
+window.__rfpSiap = true;
