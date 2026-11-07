@@ -1,0 +1,4 @@
+# Faktur asli untuk uji: berisi data wajib pajak, jangan pernah ikut di-commit
+contoh/
+*.pdf
+node_modules/

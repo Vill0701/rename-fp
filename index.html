@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Rename FP</title>
+  <meta name="description" content="Ganti nama PDF Faktur Pajak dari Coretax menjadi Referensi - Nama Pembeli - Nomor FP. Semua diproses di perangkat.">
+  <meta name="theme-color" content="#1d4ed8">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="ikon/192.png">
+  <link rel="apple-touch-icon" href="ikon/192.png">
+  <link rel="stylesheet" href="css/gaya.css">
+  <script type="module" src="js/app.js"></script>
+</head>
+<body>
+  <header class="kepala">
+    <img src="ikon/192.png" alt="" width="36" height="36">
+    <div>
+      <h1>Rename FP</h1>
+      <p>PDF Faktur Pajak Coretax → nama berkas rapi</p>
+    </div>
+  </header>
+
+  <main>
+    <section class="kartu">
+      <label id="pilih" class="pilih">
+        <input id="berkas" type="file" accept="application/pdf,.pdf" multiple>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z M14 3v5h5 M12 18v-6 M9 15l3-3 3 3"/></svg>
+        <strong>Pilih PDF Faktur Pajak</strong>
+        <span>Boleh banyak sekaligus. Bisa juga diseret ke sini.</span>
+      </label>
+      <details class="pola">
+        <summary>Pola nama: <code id="pola-teks"></code></summary>
+        <label for="pola">Gunakan <code>{referensi}</code>, <code>{pembeli}</code>, <code>{nomor}</code>. Bagian yang kosong ikut dibuang.</label>
+        <div class="baris">
+          <input id="pola" type="text" spellcheck="false" autocomplete="off">
+          <button id="pola-bawaan" type="button" class="tombol kecil">Bawaan</button>
+        </div>
+      </details>
+      <p class="privasi">🔒 Berkas diproses di perangkat ini saja, tidak diunggah ke mana pun.</p>
+    </section>
+
+    <section id="hasil" class="kartu" hidden>
+      <div class="hasil-atas">
+        <h2 id="ringkas"></h2>
+        <button id="bersihkan" type="button" class="tombol teks">Kosongkan</button>
+      </div>
+      <div class="aksi">
+        <button id="bagikan" type="button" class="tombol utama" hidden>Bagikan / Simpan</button>
+        <button id="zip" type="button" class="tombol">Unduh ZIP</button>
+        <button id="satu-satu" type="button" class="tombol">Unduh satu per satu</button>
+      </div>
+      <ol id="daftar"></ol>
+    </section>
+  </main>
+
+  <footer>Nama yang kurang lengkap bisa diubah langsung di daftar sebelum disimpan.</footer>
+</body>
+</html>

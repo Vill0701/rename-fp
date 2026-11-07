@@ -1,0 +1,97 @@
+:root {
+  --biru: #1d4ed8;
+  --biru-tua: #1e3a8a;
+  --biru-muda: #eff4ff;
+  --teks: #0f172a;
+  --redup: #64748b;
+  --garis: #e2e8f0;
+  --latar: #f1f5f9;
+  --kartu: #fff;
+  --hijau: #15803d;
+  --kuning: #b45309;
+  --merah: #b91c1c;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --biru: #60a5fa;
+    --biru-tua: #93c5fd;
+    --biru-muda: #172554;
+    --teks: #e2e8f0;
+    --redup: #94a3b8;
+    --garis: #334155;
+    --latar: #0b1220;
+    --kartu: #111a2e;
+    --hijau: #4ade80;
+    --kuning: #fbbf24;
+    --merah: #f87171;
+    color-scheme: dark;
+  }
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0; min-height: 100vh; background: var(--latar); color: var(--teks);
+  font: 15px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  padding: 0 16px calc(24px + env(safe-area-inset-bottom));
+}
+main, .kepala, footer { max-width: 720px; margin: 0 auto; }
+.kepala { display: flex; align-items: center; gap: 12px; padding: 20px 0 14px; }
+.kepala img { border-radius: 9px; }
+.kepala h1 { margin: 0; font-size: 20px; line-height: 1.2; }
+.kepala p { margin: 0; color: var(--redup); font-size: 13px; }
+.kartu { background: var(--kartu); border: 1px solid var(--garis); border-radius: 14px; padding: 16px; margin-bottom: 14px; }
+
+.pilih {
+  display: flex; flex-direction: column; align-items: center; gap: 4px; text-align: center;
+  padding: 26px 16px; border: 2px dashed var(--garis); border-radius: 12px; cursor: pointer;
+  transition: border-color .15s, background .15s;
+}
+.pilih:hover, .pilih.seret { border-color: var(--biru); background: var(--biru-muda); }
+.pilih input { position: absolute; width: 1px; height: 1px; opacity: 0; }
+.pilih:focus-within { outline: 2px solid var(--biru); outline-offset: 2px; }
+.pilih svg { width: 34px; height: 34px; fill: none; stroke: var(--biru); stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.pilih strong { font-size: 16px; }
+.pilih span { color: var(--redup); font-size: 13px; }
+
+.pola { margin-top: 12px; font-size: 13px; }
+.pola summary { cursor: pointer; color: var(--redup); }
+.pola label { display: block; margin: 8px 0 6px; color: var(--redup); }
+.pola .baris { display: flex; gap: 8px; }
+.pola input { flex: 1; min-width: 0; }
+code { font: 12.5px ui-monospace, Consolas, monospace; background: var(--latar); padding: 1px 5px; border-radius: 5px; }
+.privasi { margin: 12px 0 0; font-size: 12.5px; color: var(--redup); }
+
+input[type="text"] {
+  height: 40px; padding: 0 10px; font: inherit; color: inherit; background: var(--kartu);
+  border: 1px solid var(--garis); border-radius: 8px;
+}
+input[type="text"]:focus { outline: none; border-color: var(--biru); box-shadow: 0 0 0 3px color-mix(in srgb, var(--biru) 20%, transparent); }
+
+.tombol {
+  height: 42px; padding: 0 14px; font: inherit; font-weight: 600; color: var(--teks); cursor: pointer;
+  background: var(--kartu); border: 1px solid var(--garis); border-radius: 10px;
+}
+.tombol:hover:not(:disabled) { border-color: var(--biru); }
+.tombol:disabled { opacity: .5; cursor: default; }
+.tombol.utama { background: var(--biru); border-color: var(--biru); color: #fff; }
+@media (prefers-color-scheme: dark) { .tombol.utama { color: #0b1220; } }
+.tombol.kecil { height: 40px; }
+.tombol.teks { height: auto; padding: 0; border: 0; background: none; color: var(--biru); font-size: 13px; }
+
+.hasil-atas { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+.hasil-atas h2 { margin: 0 0 12px; font-size: 15px; }
+.aksi { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 8px; margin-bottom: 12px; }
+
+#daftar { list-style: none; margin: 0; padding: 0; }
+#daftar li { padding: 10px 0; border-top: 1px solid var(--garis); }
+#daftar .asal { font-size: 12px; color: var(--redup); word-break: break-all; }
+#daftar .baru { display: flex; gap: 6px; align-items: center; margin-top: 4px; }
+#daftar .baru input { flex: 1; min-width: 0; height: 38px; font-size: 14px; }
+#daftar .baru .ext { color: var(--redup); font-size: 13px; }
+#daftar .baru a { flex: none; font-size: 13px; color: var(--biru); text-decoration: none; padding: 8px 4px; }
+#daftar .ket { font-size: 12px; margin-top: 3px; }
+#daftar .ket.ok { color: var(--hijau); }
+#daftar .ket.kurang { color: var(--kuning); }
+#daftar .ket.gagal { color: var(--merah); }
+
+footer { color: var(--redup); font-size: 12.5px; text-align: center; padding-top: 4px; }

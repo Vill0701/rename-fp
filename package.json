@@ -1,0 +1,12 @@
+{
+  "name": "rename-fp",
+  "private": true,
+  "type": "module",
+  "description": "Ganti nama PDF Faktur Pajak Coretax menjadi Referensi - Nama Pembeli - Nomor FP, langsung di browser",
+  "scripts": {
+    "uji": "node uji/uji.mjs contoh"
+  },
+  "devDependencies": {
+    "pdfjs-dist": "4.10.38"
+  }
+}
